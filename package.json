@@ -1,0 +1,19 @@
+{
+  "name": "POS_Paperless",
+  "version": "1.0.0",
+  "description": "Paperless receipts for POS systems",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "itzco",
+  "license": "ISC",
+  "dependencies": {
+    "basic-auth": "^1.0.4",
+    "express": "^4.14.0",
+    "hashids": "^1.1.1",
+    "inotify": "^1.4.1",
+    "pdf-to-text": "0.0.6",
+    "qr-image": "^3.1.0"
+  }
+}
