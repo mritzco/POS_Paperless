@@ -14,8 +14,7 @@ var pdfUtil = require('pdf-to-text'),
     app = express(),
     Inotify = require('inotify').Inotify,
     inotify = new Inotify(),
-    receipts = {},
-    prints = [];
+    receipts = {};
 
 var methods = {
     isInt: function isInt(value) {
@@ -147,7 +146,7 @@ var pdf = {
      */
     makePublic: function(filename){
         pdfUtil.pdfToText(
-            path.join(config.pdf_path, filename),
+            path.join(config.pdf_path, filename),{},
             function(err, data) {
                 var table = pdf.parseTable(data);
                 if (!table) return false;
@@ -166,6 +165,7 @@ var pdf = {
      * @return {int}      table number or false
      */
     parseTable: function(text){
+        if (!text) return false;
         var isTable = text.indexOf(config.str_takeaway) === -1;
         var use_regex = isTable ? config.regex_table : config.regex_check;
 

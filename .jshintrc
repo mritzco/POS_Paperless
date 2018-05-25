@@ -1,0 +1,33 @@
+{
+  "node": true,
+  "browser": true,
+  "bitwise": true,
+  "camelcase": false,
+  "curly": false,
+  "eqeqeq": true,
+  "latedef": false,
+  "noarg": true,
+  "undef": true,
+  "unused": "vars",
+  "strict": false,
+  "trailing": true,
+  "smarttabs": true,
+  "asi":true,
+  "eqnull": false,
+  "laxbreak" : true,
+  "newcap": false,
+  "expr": true,
+  "esversion": 6,
+  "globals": {
+    "angular": false,
+    "app": true,
+    "exports": true,
+    "Handlebars": true,
+    "require": false,
+    "console": false,
+    "module": false,
+    "process": false,
+    "__dirname": false,
+    "Hammer": false
+  }
+}
