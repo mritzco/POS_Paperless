@@ -8,6 +8,24 @@ var config = {
         pwd: "pwd"
     },
     "promptpayNumber": '', // Leave empty to disable
+    "email": {
+        from: '',
+        subject: '',
+        content:''
+    },
+    "envelope" : {
+      debug: true,
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      SSL: true,
+      auth: {
+        user: '',
+        pass: ''
+      },
+      maxConnections: 5,
+      maxMessages: 10
+    },
     "expire": 300,
     "port": 3000,
     "str_takeaway": '*TAKE OUT*',
