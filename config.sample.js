@@ -7,11 +7,13 @@ var config = {
         name: "user",
         pwd: "pwd"
     },
+    "promptpayNumber": '', // Leave empty to disable
     "expire": 300,
     "port": 3000,
     "str_takeaway": '*TAKE OUT*',
     "regex_table": /Table#: \[([\d, ]+)\]/g,
     "regex_check": /CHK#: ([\d, ]+)/g,
+    "regex_total": /Total: ([\d,.]+)/g,
     "css": css,
     "msg":{
         "illegal":  css + "<pre>Incorrect code, please try scanning your NFC tag again</pre>",

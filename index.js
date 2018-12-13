@@ -14,6 +14,7 @@ var pdfUtil = require('pdf-to-text'),
     app = express(),
     Inotify = require('inotify').Inotify,
     inotify = new Inotify(),
+    generatePayload = require('promptpay-qr'),
     receipts = {};
 
 var methods = {
@@ -80,15 +81,19 @@ var routes = {
     textReceipt: function (req, res) {
         var btns;
         if (req.headers.referer === undefined || req.headers.referer.indexOf('service') === -1 ) {
-            btns = util.format(config.msg.button, 'pdf/' + req.params.hash, 'PDF' );
+            btns = [util.format(config.msg.button, 'pdf/' + req.params.hash, 'PDF' )];
         } else {
-            btns = util.format(config.msg.button, 'qr/' + req.params.hash, 'QR Code');
+            btns =
+                [util.format(config.msg.button, 'qr/' + req.params.hash, 'QR Code')];
+            if (config.promptpayNumber) btns.push(
+                util.format(config.msg.button, 'pay/' + req.params.hash, 'Promptpay')
+            );
         }
 
         return res.send(util.format(
             config.msg.textReceipt,
             receipts[req.id].text,
-            btns));
+            btns.join("\n")));
     },
     pdfReceipt: function(req, res) {
         res.sendFile(path.join(config.pdf_path, receipts[req.id].name));
@@ -97,6 +102,21 @@ var routes = {
         var code = qr.image( 'http://' + req.hostname + ':' + config.port + '/' + req.params.hash, {type: 'svg'});
         res.type('svg');
         code.pipe(res);
+    },
+    promptpay: function (req,res) {
+        let id = methods.decode(req.params.hash),
+            text = receipts[req.id].text,
+            r = config.regex_total.exec(text);
+
+        if (r === null || r.length < 2) {
+            return res.send(config.msg.wrongFormat);
+        }
+        let amount = Number(r[1]);
+
+        let payload = generatePayload(config.promptpayNumber, {amount});
+        var qrcode = qr.image( payload, {type: 'svg'});
+        res.type('svg');
+        qrcode.pipe(res);
     },
     debug: function(req, res) {
         var tmp = { tables: {}, receipts: receipts};
@@ -132,6 +152,8 @@ app.get('/debug',[routes.auth, routes.debug]);
 app.get('/:hash', [routes.validate, routes.textReceipt]);
 app.get('/pdf/:hash', [routes.validate, routes.pdfReceipt]);
 app.get('/qr/:hash', [routes.validate, routes.qrcode]);
+app.get('/pay/:hash', [routes.validate, routes.promptpay]);
+
 app.all(/^(.*)$/, routes.illegal);
 app.listen(config.port, function () {
   console.log(config.msg.serving, config.port);

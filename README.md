@@ -1,14 +1,14 @@
-#Paperless POS
+# Paperless POS
 
 Allow POS systems to go paperless.
 
 Tested with Floreant POS but should work with any system that can print receipts to a PDF printer.
 
-###Prerequisites:
+### Prerequisites:
 - Configure Cups PDF printer
 - Setup POS to print receipts to PDF
 
-###Install:
+### Install:
 - Clone repo
 - Configure
 - Install dependencies
@@ -21,13 +21,25 @@ Copy or rename:
 
 Change the following values:
 ````js
+// The location where your PDF printer saves the files
 "pdf_path": "[YOUR PATH, maybe: /home/user/PDF]",
+
+// Some random string to hide/encode the table numbers
 "salt": "Any string here",
+
+// Table count
 "table_count": 15,
+
+// Access for Waitress or other service people
 "user": {
     name: "username",
     pwd: "password"
 },
+
+// If you want to receive promptpay payments enter your phone or ID
+"promptpayNumber": '',
+
+
 `````
 ### Adding your own logo
 Place your logo in: images/logo.png
@@ -37,6 +49,18 @@ If you want to change the name you'll need to modify line #1 in config.js
 Find:background:url(logo.png)
 Replace: logo.png for your filename
 ````
+
+### Generating QR-codes for promptpay
+Simply enter your phone or Citizen ID on the config file. Be sure you register the service before trying to use it.
+```
+"promptpayNumber": '000-000-0000',
+```
+**Bank account numbers don't work**
+
+To disable promptpay, leave the field empty:
+```
+"promptpayNumber": '',
+```
 
 ## Install dependencies
 ````sh
@@ -55,15 +79,19 @@ Receipts will be served at the computer IP:3000, example:
 http://localhost:3000 or
 http://192.168.1.1:3000
 
-#### Service people
-URL/service
-*Needs login data* Waitress / service people can access all available receipts at this address
+#### Waitress and Service people
+
+Browse to:
+
+    {URL}/service
+*Use user/password from config file* Waitress / service people can access all available receipts at this URL.
 
 
 ##### Flow  
 1. Check list of Receipts
 2. Click on desired table to see the receipt
 3. Optional: Click button to create a QR code for customers
+4. Click Promptpay to generate a QR for tranfer
 
 #### Customers
 URL/HASHCODE
