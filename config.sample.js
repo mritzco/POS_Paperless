@@ -36,6 +36,7 @@ var config = {
     "msg":{
         "illegal":  css + "<pre>Incorrect code, please try scanning your NFC tag again</pre>",
         "notReady":  css + "<pre>Receipts are only available after you order your bill</pre>",
+        "wrongFormat":  css + "<pre>Format of receipt is incorrect please contact admin.</pre>",
         "textReceipt":  css + "<pre>%s</pre>",
         "button": "<a href=\"/%s\">%s</a>",
         "service": "<h4>Available receipts:</h4>",
