@@ -15,6 +15,9 @@ var pdfUtil = require('pdf-to-text'),
     Inotify = require('inotify').Inotify,
     inotify = new Inotify(),
     generatePayload = require('promptpay-qr'),
+    nodemailer = require('nodemailer'),
+    smtpTransport = require('nodemailer-smtp-transport'),
+    transporter = nodemailer.createTransport(smtpTransport(config.envelope));
     receipts = {};
 
 var methods = {
@@ -158,6 +161,25 @@ app.all(/^(.*)$/, routes.illegal);
 app.listen(config.port, function () {
   console.log(config.msg.serving, config.port);
 });
+
+var mailer = {
+    send: function(to, id) {
+        var mailOptions = {
+          from: config.email.from, // sender address
+          to: to, // list of receivers
+          subject: config.subject,
+          html: config.content
+        };
+        // add attachment
+        transporter.sendMail(mailOptions, function(error, info) {
+          if (error) {
+            callback(error);
+          } else {
+            callback(null, info.response);
+          }
+        });
+    }
+}
 
 var pdf = {
 

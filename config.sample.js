@@ -8,6 +8,24 @@ var config = {
         pwd: "pwd"
     },
     "promptpayNumber": '', // Leave empty to disable
+    "email": {
+        from: '',
+        subject: '',
+        content:''
+    },
+    "envelope" : {
+      debug: true,
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      SSL: true,
+      auth: {
+        user: '',
+        pass: ''
+      },
+      maxConnections: 5,
+      maxMessages: 10
+    },
     "expire": 300,
     "port": 3000,
     "str_takeaway": '*TAKE OUT*',
@@ -18,6 +36,7 @@ var config = {
     "msg":{
         "illegal":  css + "<pre>Incorrect code, please try scanning your NFC tag again</pre>",
         "notReady":  css + "<pre>Receipts are only available after you order your bill</pre>",
+        "wrongFormat":  css + "<pre>Format of receipt is incorrect please contact admin.</pre>",
         "textReceipt":  css + "<pre>%s</pre>",
         "button": "<a href=\"/%s\">%s</a>",
         "service": "<h4>Available receipts:</h4>",
