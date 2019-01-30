@@ -10,11 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "basic-auth": "^1.0.4",
-    "express": "^4.14.0",
-    "hashids": "^1.1.1",
-    "inotify": "^1.4.1",
+    "express": "^4.16.4",
+    "hashids": "^1.2.2",
+    "inotify": "^1.4.6",
     "pdf-to-text": "0.0.6",
     "promptpay-qr": "^0.4.4",
-    "qr-image": "^3.1.0"
+    "qr-image": "^3.2.0"
   }
 }

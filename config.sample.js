@@ -1,4 +1,4 @@
-var css = "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>\nbody{\nbackground:url(logo.png) no-repeat 30px 15px;margin-top:100px;}\npre{ background: #fff none repeat scroll 0 0;\nborder: 1px solid #ccc;\nbox-shadow: 3px 6px 4px rgba(0, 0, 0, 0.36);\ndisplay: block;\nmax-width: 270px;\npadding: 33px 25px;white-space: pre-wrap;}\na{background: #444;\n color: white;\n display: block;\n padding: 15px;\n text-align: center;\n text-decoration: none;\n width: 292px;margin:3px 0;}\nh4{ border-bottom: 1px solid #ccc;\ncolor: #555;\npadding: 10px 0;}</style>\n";
+var css = "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>\nbody{\nbackground:url(logo.png) no-repeat center 15px;margin-top:100px;}\n pre{ background: #fff;\nborder: 1px solid #ccc;\n box-shadow: 3px 6px 4px #ddd;\n display: block;\n min-width: 296px;\n margin: 0 9px;\n padding:33px 10px;\n white-space: pre-wrap;\n text-align: justify;\n}\n a { background: #444;\n color: white;\n display: block;\n padding: 15px;\n text-align: center;\n text-decoration: none;\n margin: 12px 8px;}\nh4{ border-bottom: 1px solid #ccc;\ncolor: #555;\npadding: 10px 0;}</style>\n";
 var config = {
     "pdf_path": "/home/USER/PDF/",
     "salt": "YOUR-OWN-SALT-HERE",
@@ -13,7 +13,7 @@ var config = {
     "str_takeaway": '*TAKE OUT*',
     "regex_table": /Table#: \[([\d, ]+)\]/g,
     "regex_check": /CHK#: ([\d, ]+)/g,
-    "regex_total": /Total: ([\d,.]+)/g,
+    "regex_total": /Total $ ([\d,.]+)/g,
     "css": css,
     "msg":{
         "illegal":  css + "<pre>Incorrect code, please try scanning your NFC tag again</pre>",
