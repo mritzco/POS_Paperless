@@ -31,7 +31,7 @@ var config = {
     "str_takeaway": '*TAKE OUT*',
     "regex_table": /Table#: \[([\d, ]+)\]/g,
     "regex_check": /CHK#: ([\d, ]+)/g,
-    "regex_total": /Total $ ([\d,.]+)/g,
+    "regex_total": /Total\s+\$\s+([\d,.]+)/g,
     "css": css,
     "msg":{
         "illegal":  css + "<pre>Incorrect code, please try scanning your NFC tag again</pre>",
