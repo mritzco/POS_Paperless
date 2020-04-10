@@ -92,7 +92,7 @@ var routes = {
                 util.format(config.msg.button, 'pay/' + req.params.hash, 'Promptpay')
             );
         }
-
+        btns.push(util.format(config.msg.button, 'service', 'Back'));
         return res.send(util.format(
             config.msg.textReceipt,
             receipts[req.id].text,
@@ -114,8 +114,8 @@ var routes = {
         if (r === null || r.length < 2) {
             return res.send(config.msg.wrongFormat);
         }
-        let amount = Number(r[1]);
 
+        let amount = Number(r[1].replace( /,/g, '' ));
         let payload = generatePayload(config.promptpayNumber, {amount});
         var qrcode = qr.image( payload, {type: 'svg'});
         res.type('svg');
