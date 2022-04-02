@@ -10,9 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "basic-auth": "^1.0.4",
+    "chokidar": "^3.5.3",
     "express": "^4.16.4",
     "hashids": "^1.2.2",
-    "inotify": "^1.4.6",
     "nodemailer": "^4.7.0",
     "nodemailer-smtp-transport": "^2.7.4",
     "pdf-to-text": "0.0.6",

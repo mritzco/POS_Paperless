@@ -5,15 +5,14 @@
 var pdfUtil = require('pdf-to-text'),
     util = require('util'),
     path = require('path'),
-    config = require("config.js"),
+    config = require("./config.js"),
     basicAuth = require("basic-auth"),
     Hashids = require('hashids'),
     hashids = new Hashids(config.salt),
     qr = require('qr-image'),
     express = require('express'),
     app = express(),
-    Inotify = require('inotify').Inotify,
-    inotify = new Inotify(),
+    chokidar = require('chokidar'),
     generatePayload = require('promptpay-qr'),
     nodemailer = require('nodemailer'),
     smtpTransport = require('nodemailer-smtp-transport'),
@@ -189,9 +188,11 @@ var pdf = {
      * @return {null}
      */
     makePublic: function(filename){
+    console.log('[makePublic]', filename),
         pdfUtil.pdfToText(
-            path.join(config.pdf_path, filename),{},
-            function(err, data) {
+            filename,{},
+            (err, data) => {
+                //console.log(err, data);
                 var table = pdf.parseTable(data);
                 if (!table) return false;
                 receipts[table] =  {
@@ -215,11 +216,11 @@ var pdf = {
 
         use_regex.lastIndex = 0;
         var r = use_regex.exec(text);
+
         if (r === null || r.length < 2) {
             return false;
         }
         return (isTable ? '' : config.msg.takeaway) + r[1];
-
     }
 };
 /**
@@ -227,18 +228,18 @@ var pdf = {
  * @param  {object}   event
  * @return {nothing}       [description]
  */
-var onFileChange = function(event) {
-    var mask = event.mask,
-        type = mask & Inotify.IN_ISDIR ? 'directory' : 'file';
-    if (type !== 'file' || !event.name || event.name.indexOf('.pdf') !== event.name.length-4) return;
-    pdf.makePublic(event.name);
+var onFileChange = function(filepath) {
+    pdf.makePublic(filepath);
 };
 
-/**
- * Observes a directory for writes
- */
-var home2_wd = inotify.addWatch({
-    path:      config.pdf_path,
-    watch_for:  Inotify.IN_CLOSE_WRITE,
-    callback:  onFileChange
+
+const watcher = chokidar.watch(`${config.pdf_path}/*.pdf`, {
+  ignored: /(^|[\/\\])\../, // ignore dotfiles
+  ignoreInitial: true,
+  persistent: true
 });
+watcher
+  .on('add', onFileChange)
+  .on('change', onFileChange)
+
+console.log('Watching]', config.pdf_path);
